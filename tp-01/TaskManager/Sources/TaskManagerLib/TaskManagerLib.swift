@@ -40,7 +40,7 @@ public func createCorrectTaskManager() -> PTNet {
     let taskPool    = PTPlace(named: "taskPool")
     let processPool = PTPlace(named: "processPool")
     let inProgress  = PTPlace(named: "inProgress")
-    let compteprocess = PTPlace(named : "compteprocess")
+    let compteprocess = PTPlace(named : "compteprocess") //on rajoute le compteur de process, utile pour empecher le blocage des process
 
     // Transitions
     let create      = PTTransition(

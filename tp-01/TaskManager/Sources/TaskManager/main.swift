@@ -1,4 +1,4 @@
-import TaskManagerLib
+import TaskManagerLib                                                   //Adrien Razurel
 
 let taskManager = createTaskManager()
 
@@ -13,7 +13,7 @@ let success     = taskManager.transitions.first { $0.name == "success" }!
 //On va faire une succession d'étapes avec l'exemple mis dans le TP, ceci va conduire
 //a un blocage du process dans le inProgress, ce qui est le probleme principal de ce reseau proposé
 print("Avec le reseau de petri initial :")
-let m1 = create.fire(from: [taskPool: 0, processPool: 0, inProgress: 0])
+let m1 = create.fire(from: [taskPool: 0, processPool: 0, inProgress: 0]) //creation de m1 grace au marquage initiale (0 de partout)
 print(m1!)
 let m2 = spawn.fire(from: m1!)
 print(m2!)
@@ -43,7 +43,7 @@ let exec2        = correctTaskManager.transitions.first { $0.name == "exec" }!
 let success2     = correctTaskManager.transitions.first { $0.name == "success" }!
 
 
-let m7 = create2.fire(from: [taskPool2: 0, processPool2: 0, inProgress2: 0, compteprocess: 1])
+let m7 = create2.fire(from: [taskPool2: 0, processPool2: 0, inProgress2: 0, compteprocess: 1])//creation de m1 grace au marquage initiale (0 de partout et 1 dans le compteur de process)
 print(m7!)
 let m8 = spawn2.fire(from: m7!)
 print(m8!)

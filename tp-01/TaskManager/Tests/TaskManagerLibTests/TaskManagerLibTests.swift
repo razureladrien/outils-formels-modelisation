@@ -110,4 +110,4 @@ class TaskManagerLibTests: XCTestCase {
         XCTAssert(m3! == [taskPool: 0, processPool: 0, inProgress: 1])
     }
 
-}
+}taskManager

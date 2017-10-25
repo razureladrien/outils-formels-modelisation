@@ -13,7 +13,7 @@ class SmokersLibTests: XCTestCase {
         let model = createModel()
 
         // Make sure all require places were created.
-        for placeName in ["t", "p", "t", "m", "w1", "s1", "w2", "s2", "w3", "s3"] {
+        for placeName in ["r", "p", "t", "m", "w1", "s1", "w2", "s2", "w3", "s3"] {
             XCTAssertNotNil(model.places.first(where: { $0.name == placeName }))
         }
 

@@ -2,8 +2,13 @@ public class MarkingGraph {
 
     public typealias Marking = [String: Int]
 
+<<<<<<< HEAD
     public let marking   : Marking //marquage d'un noeud
     public var successors: [String: MarkingGraph] //arcs sortants du noeud représenté par l'instance
+=======
+    public let marking   : Marking
+    public var successors: [String: MarkingGraph]
+>>>>>>> 90132b5e5bad46d14f2ad8c5a40be0fe8ce3fbab
 
     public init(marking: Marking, successors: [String: MarkingGraph] = [:]) {
         self.marking    = marking
@@ -12,6 +17,7 @@ public class MarkingGraph {
 
 }
 
+<<<<<<< HEAD
 
 
 
@@ -48,6 +54,19 @@ do {
 
 
 
+=======
+// Ex. 1: Mutual exclusion
+do {
+    let m0 = MarkingGraph(marking: ["s0": 1, "s1": 0, "s2": 1, "s3": 0, "s4": 1])
+    let m1 = MarkingGraph(marking: ["s0": 0, "s1": 1, "s2": 0, "s3": 0, "s4": 1])
+    let m2 = MarkingGraph(marking: ["s0": 1, "s1": 0, "s2": 0, "s3": 1, "s4": 0])
+
+    m0.successors = ["t1": m1, "t3": m2]
+    m1.successors = ["t0": m0]
+    m2.successors = ["t2": m0]
+}
+
+>>>>>>> 90132b5e5bad46d14f2ad8c5a40be0fe8ce3fbab
 // Ex. 2: PetriNet 1
 do {
     let m0 = MarkingGraph(marking: ["p0": 2, "p1": 0])
@@ -84,7 +103,11 @@ do {
     m7.successors = ["t4": m9]
     m8.successors = ["t2": m9]
 
+<<<<<<< HEAD
     print(countNodes(markingGraph : m0))
+=======
+    // Write your code here ...
+>>>>>>> 90132b5e5bad46d14f2ad8c5a40be0fe8ce3fbab
 }
 
 // Ex. 2: PetriNet 3

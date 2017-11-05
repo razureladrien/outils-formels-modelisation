@@ -1,6 +1,7 @@
 import PetriKit
 
 public func createModel() -> PTNet {
+<<<<<<< HEAD
   //places
   let m  = PTPlace(named: "m")
   let p  = PTPlace(named: "p")
@@ -60,4 +61,8 @@ public func createModel() -> PTNet {
       postconditions :[PTArc(place: w3)])
 
     return PTNet(places: [r, p, t, m, w1, s1, w2, s2, w3, s3], transitions: [tpt, tpm, ttm, ts1, ts2, ts3, tw1, tw2, tw3])
+=======
+    // Write here the encoding of the smokers' model.
+    return PTNet(places: [], transitions: [])
+>>>>>>> 90132b5e5bad46d14f2ad8c5a40be0fe8ce3fbab
 }

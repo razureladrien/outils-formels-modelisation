@@ -22,6 +22,7 @@ else {
 // Create the initial marking.
 let initialMarking: PTMarking = [r: 1, p: 0, t: 0, m: 0, w1: 1, s1: 0, w2: 1, s2: 0, w3: 1, s3: 0]
 
+<<<<<<< HEAD
 let transitions = model.transitions //on récupère les transitions du reseau de pétri
 
 func countNodes(to markingGraph : MarkingGraph) -> Int { //fonction qui va retourner le nombre d'états d'un marking graph
@@ -113,4 +114,9 @@ if let markingGraph = model.markingGraph(from: initialMarking) {
     else{
       print("Il est impossible d'avoir deux ingredients en même temps sur la table")
     }
+=======
+// Create the marking graph (if possible).
+if let markingGraph = model.markingGraph(from: initialMarking) {
+    // Write here the code necessary to answer questions of Exercise 4.
+>>>>>>> 90132b5e5bad46d14f2ad8c5a40be0fe8ce3fbab
 }

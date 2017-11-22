@@ -1,8 +1,45 @@
 extension PredicateNet {
 
+
+
+
     /// Returns the marking graph of a bounded predicate net.
     public func markingGraph(from marking: MarkingType) -> PredicateMarkingNode<T>? {
-        // Write your code here ...
+      var transitions = Array(self.transitions) //on met les transitions dans un tableau pour pouvoir les prendre
+      let mark = PredicateMarkingNode<T>(marking: marking, successors: [:]) //marquage init defini comme PredicateMarkingNode ici
+      var mark_to_do = [mark]//marquages qu'on va faire
+      var mark_done = [mark]//marquages deja faits
+
+      while (mark_to_do.count != 0) {//tant qu'il y a encore des marquages à traiter
+        let current_mark = mark_to_do[0] //on traite a chaque fois le premier élément des marquages a traiter
+
+        for k in 0...(transitions.count-1) {
+          let binding_table = transitions[k].fireableBingings(from: current_mark.marking)//tableau des bindings
+          var newBind : PredicateBindingMap<T> = [:] //nouveau binding
+
+          for binding in binding_table { //pour chaque binding
+
+            if let new_fire = transitions[k].fire(from: current_mark.marking, with: binding) {
+              let new_mark = PredicateMarkingNode<T>(marking: new_fire, successors: [:]) //si c'est fireable alors on fire
+
+              if mark_done.contains(where: { PredicateNet.greater(new_mark.marking, $0.marking)}) == true { //Si trop grand alors on arrete
+                return nil
+              }
+
+              if mark_done.contains(where: { PredicateNet.equals($0.marking, new_mark.marking)}) == false {//s'il est egal alors on append dans les marquages triates et a traiter
+                mark_to_do.append(new_mark)
+                mark_done.append(new_mark)
+                newBind[binding] = new_mark
+                current_mark.successors.updateValue(newBind, forKey: transitions[k])//nouveau successor
+              }
+            }
+
+          }
+        }
+
+        mark_to_do.remove(at: 0) //je remove le marquage que je viens de traiter dans les marquages a traiter, permettra de stoper la boucle while à un moment
+      }
+
 
         // Note that I created the two static methods `equals(_:_:)` and `greater(_:_:)` to help
         // you compare predicate markings. You can use them as the following:
@@ -13,7 +50,7 @@ extension PredicateNet {
         // You may use these methods to check if you've already visited a marking, or if the model
         // is unbounded.
 
-        return nil
+        return mark //retourne le graph de marquage des bindings
     }
 
     // MARK: Internals

@@ -26,11 +26,19 @@ extension PredicateNet {
                 return nil
               }
 
-              if mark_done.contains(where: { PredicateNet.equals($0.marking, new_mark.marking)}) == false {//s'il est egal alors on append dans les marquages triates et a traiter
+              if mark_done.contains(where: { PredicateNet.equals($0.marking, new_mark.marking)}) == false {//s'il est pas encore traité alors on append dans les marquages pour le traiter
                 mark_to_do.append(new_mark)
                 mark_done.append(new_mark)
                 newBind[binding] = new_mark
                 current_mark.successors.updateValue(newBind, forKey: transitions[k])//nouveau successor
+              }
+              else { //par contre s'il est deja traité
+                for MARK in mark_done {
+                  if PredicateNet.equals(MARK.marking, new_mark.marking) == true {//on trouve son successor
+                    newBind[binding] = MARK
+                    current_mark.successors.updateValue(newBind, forKey: transitions[k])//et on le set
+                  }
+                }
               }
             }
 

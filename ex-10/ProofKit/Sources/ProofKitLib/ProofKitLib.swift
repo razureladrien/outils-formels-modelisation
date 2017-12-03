@@ -194,7 +194,7 @@ public struct Judgment {
     public var isProvable: Bool {
         let Γ = self.hypotheses
         let Δ = self.conclusions
-
+        print(self)
         for f in Γ {
             switch f {
             // Basic

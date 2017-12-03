@@ -43,7 +43,7 @@ public enum Formula {
         return .implication(lhs, rhs)
     }
 
-    /// The negation normal form of the formula.
+    /// The negation normal form of the formula. NNF
     public var nnf: Formula {
         switch self {
         case .proposition(_):
@@ -72,14 +72,56 @@ public enum Formula {
 
     /// The disjunctive normal form of the formula.
     public var dnf: Formula {
-        // Write your code here ...
-        return self
+        switch self.nnf { //les premiers etapes de la nnf sont utiles pour la dnf
+        case .proposition(_): //si c'est deja un proposition rien besoin de faire
+          return self.nnf
+        case .negation(_): //pareil si c'est une negation
+          return self.nnf
+        case .disjunction(let a, let b): //si c est une disjonction alors on test les deux termes pour voir si on peut les developper, et on return une disjonction de tout ca
+          return a.dnf || b.dnf
+        case .conjunction(let a, let b): //dans le cas d'une conjonction on va chercher à developper
+          switch a {
+          case .disjunction(let c, let d): //si le terme de gauche de la conjonction est une disjonction alors on distribue
+            return (c.dnf && b.dnf).dnf || (d.dnf && b.dnf).dnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
+          default: break
+          }
+          // dans les autres cas on ne peut rien changer, car pas de distribution possible
+          switch b {
+          case .disjunction(let c, let d): //pareil mais avec le terme de droite
+            return (c.dnf && a.dnf).dnf || (d.dnf && a.dnf).dnf
+          default: break
+          }
+        default :break
+        }
+      return self
     }
+
+
 
     /// The conjunctive normal form of the formula.
     public var cnf: Formula {
-        // Write your code here ...
-        return self
+      switch self.nnf { //les premiers etapes de la nnf sont utiles pour la cnf
+      case .proposition(_): //si c'est deja un proposition rien besoin de faire
+        return self.nnf
+      case .negation(_): //pareil si c'est une negation
+        return self.nnf
+      case .conjunction(let a, let b): //si c est une conjonction alors on test les deux termes pour voir si on peut les developper, et on return une disjonction de tout ca
+        return a.cnf && b.cnf
+      case .disjunction(let a, let b): //dans le cas d'une disjunction on va chercher à developper
+        switch a {
+        case .conjunction(let c, let d): //si le terme de gauche de la disjonction est une conjonction alors on distribue
+          return (c.cnf || b.cnf).dnf && (d.cnf || b.cnf).cnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
+        default: break
+        }
+        // (dans les autres cas on ne peut rien changer, car pas de distribution possible)
+        switch b {
+        case .conjunction(let c, let d): //pareil mais avec le terme de droite
+          return (c.cnf || a.cnf).cnf && (d.cnf || a.cnf).cnf
+        default: break
+        }
+      default :break
+      }
+    return self
     }
 
     /// The propositions the formula is based on.

@@ -1,19 +1,35 @@
 import ProofKitLib
 
+///////////////////////////////////TEST NNF CNF ET DNF/////////////////////////////////
 let a: Formula = "a"
 let b: Formula = "b"
-let f = a && b
+let c: Formula = "c"
+let f = (a => b) || (a && c)
+let g = (a => b) && !(a && c)
+let h = (!a || b && c) && a
+print("Formule de base : ",f)
+print("NNf:\n",f.nnf)
+print("DNf:\n",f.dnf)
+print("CNf:\n",f.cnf)
+print("")
+print("Formule de base : ",g)
+print("NNF:\n",g.nnf)
+print("DNf:\n",g.dnf)
+print("CNf:\n",g.cnf)
+print("")
+print("Formule de base : ",h)
+print("NNF:\n",h.nnf)
+print("DNf:\n",h.dnf)
+print("CNf:\n",h.cnf)
 
-print(f)
-
-let booleanEvaluation = f.eval { (proposition) -> Bool in
+/*let booleanEvaluation = f.eval { (proposition) -> Bool in
     switch proposition {
         case "p": return true
         case "q": return false
         default : return false
     }
 }
-print(booleanEvaluation)
+//print(booleanEvaluation)
 
 enum Fruit: BooleanAlgebra {
 
@@ -49,4 +65,4 @@ let fruityEvaluation = f.eval { (proposition) -> Fruit in
         default : return .orange
     }
 }
-print(fruityEvaluation)
+//print(fruityEvaluation) */

@@ -2,51 +2,27 @@ import ProofKitLib
 
 let a: Formula = "a"
 let b: Formula = "b"
-let f = a && b
+let c: Formula = "c"
+let d: Formula = "d"
+let f = (a => b)&&(a => c)&&(b => d)&&(c => d) |- (a => d)
 
-print(f)
+print(f.isProvable)
+print("\n \n")
 
-let booleanEvaluation = f.eval { (proposition) -> Bool in
-    switch proposition {
-        case "p": return true
-        case "q": return false
-        default : return false
-    }
-}
-print(booleanEvaluation)
+let p = (a => b)&&(b => a) |- (a => b)&&(b => a)
 
-enum Fruit: BooleanAlgebra {
+print(p.isProvable)
 
-    case apple, orange
+let fait_beau: Formula = "fait_beau"
+let va_uni: Formula = "va_uni"
+let risque_pleuvoir: Formula = "risque_pleuvoir"
+let etre_a_maison: Formula = "etre_a__maison"
+let fait_exercice: Formula = "fait_exercice"
+let relit_cours: Formula = "relit_cours"
+let ciel_gris: Formula = "ciel_gris"
+let etre_content: Formula = "etre_content"
 
-    static prefix func !(operand: Fruit) -> Fruit {
-        switch operand {
-        case .apple : return .orange
-        case .orange: return .apple
-        }
-    }
 
-    static func ||(lhs: Fruit, rhs: @autoclosure () throws -> Fruit) rethrows -> Fruit {
-        switch (lhs, try rhs()) {
-        case (.orange, .orange): return .orange
-        case (_ , _)           : return .apple
-        }
-    }
-
-    static func &&(lhs: Fruit, rhs: @autoclosure () throws -> Fruit) rethrows -> Fruit {
-        switch (lhs, try rhs()) {
-        case (.apple , .apple): return .apple
-        case (_, _)           : return .orange
-        }
-    }
-
-}
-
-let fruityEvaluation = f.eval { (proposition) -> Fruit in
-    switch proposition {
-        case "p": return .apple
-        case "q": return .orange
-        default : return .orange
-    }
-}
-print(fruityEvaluation)
+let g = (fait_beau => va_uni)&&(risque_pleuvoir => !va_uni)&&(!etre_a_maison => va_uni)&&(etre_a_maison => (fait_exercice && relit_cours))&&(ciel_gris => risque_pleuvoir)&&(va_uni => (fait_exercice && etre_content))&&(fait_beau || ciel_gris) |- fait_exercice
+print("\n \n")
+print(g.isProvable)

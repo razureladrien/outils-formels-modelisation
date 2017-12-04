@@ -72,12 +72,16 @@ public enum Formula {
 
     /// The disjunctive normal form of the formula.
     public var dnf: Formula {
+
+/////////////////////////CONDITONS//////////////////////////
         switch self.nnf { //les premiers etapes de la nnf sont utiles pour la dnf
         case .proposition(_): //si c'est deja un proposition rien besoin de faire
           return self.nnf
         case .negation(_): //pareil si c'est une negation
           return self.nnf
-        case .disjunction(let a, let b): //si c est une disjonction alors on test les deux termes pour voir si on peut les developper, et on return une disjonction de tout ca
+///////////////////////////D'ARRET///////////////////////////
+
+        case .disjunction(let a, let b): //si c est une disjonction alors on retourne la disjonction des dnf des deux termes(on voit si c'est possible de les developper)
           return a.dnf || b.dnf
         case .conjunction(let a, let b): //dans le cas d'une conjonction on va chercher à developper
           switch a {
@@ -99,12 +103,16 @@ public enum Formula {
 
 
     /// The conjunctive normal form of the formula.
-    public var cnf: Formula {
+    public var cnf: Formula { //meme idee que pour la dnf sauf que les 'dnf' deviennent 'cnf' et echange les '&&' et les '||'
+
+/////////////////////////CONDITONS//////////////////////////
       switch self.nnf { //les premiers etapes de la nnf sont utiles pour la cnf
       case .proposition(_): //si c'est deja un proposition rien besoin de faire
         return self.nnf
       case .negation(_): //pareil si c'est une negation
         return self.nnf
+///////////////////////////D'ARRET///////////////////////////
+
       case .conjunction(let a, let b): //si c est une conjonction alors on test les deux termes pour voir si on peut les developper, et on return une disjonction de tout ca
         return a.cnf && b.cnf
       case .disjunction(let a, let b): //dans le cas d'une disjunction on va chercher à developper

@@ -86,13 +86,13 @@ public enum Formula {
         case .conjunction(let a, let b): //dans le cas d'une conjonction on va chercher à developper
           switch a {
           case .disjunction(let c, let d): //si le terme de gauche de la conjonction est une disjonction alors on distribue
-            return (c.dnf && b.dnf).dnf || (d.dnf && b.dnf).dnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
+            return ((c.dnf && b.dnf) || (d.dnf && b.dnf)).dnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
           default: break
           }
           // dans les autres cas on ne peut rien changer, car pas de distribution possible
           switch b {
           case .disjunction(let c, let d): //pareil mais avec le terme de droite
-            return (c.dnf && a.dnf).dnf || (d.dnf && a.dnf).dnf
+            return ((c.dnf && a.dnf) || (d.dnf && a.dnf)).dnf
           default: break
           }
         default :break
@@ -118,13 +118,13 @@ public enum Formula {
       case .disjunction(let a, let b): //dans le cas d'une disjunction on va chercher à developper
         switch a {
         case .conjunction(let c, let d): //si le terme de gauche de la disjonction est une conjonction alors on distribue
-          return (c.cnf || b.cnf).dnf && (d.cnf || b.cnf).cnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
+          return ((c.cnf || b.cnf) && (d.cnf || b.cnf)).cnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
         default: break
         }
         // (dans les autres cas on ne peut rien changer, car pas de distribution possible)
         switch b {
         case .conjunction(let c, let d): //pareil mais avec le terme de droite
-          return (c.cnf || a.cnf).cnf && (d.cnf || a.cnf).cnf
+          return ((c.cnf || a.cnf) && (d.cnf || a.cnf)).cnf
         default: break
         }
       default :break

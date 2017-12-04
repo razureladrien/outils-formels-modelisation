@@ -4,7 +4,7 @@ import ProofKitLib
 let a: Formula = "a"
 let b: Formula = "b"
 let c: Formula = "c"
-let f = (a => b) || (a && c)
+let f = (a => b) || !(a => c)
 let g = (a => b) && !(a && c)
 let h = (!a || b && c) && a
 print("Formule de base : ",f)

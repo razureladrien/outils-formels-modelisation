@@ -4,9 +4,13 @@ import ProofKitLib
 let a: Formula = "a"
 let b: Formula = "b"
 let c: Formula = "c"
+let d: Formula = "d"
+let e: Formula = "e"
 let f = (a => b) || !(a => c)
-let g = (a => b) && !(a && c)
+let g = (a => (b => c)) && !(a && c)
 let h = (!a || b && c) && a
+let j = a || (b || (c && a))
+let k = a || !(b && (c || d))
 print("Formule de base : ",f)
 print("NNf:\n",f.nnf)
 print("DNf:\n",f.dnf)
@@ -21,6 +25,16 @@ print("Formule de base : ",h)
 print("NNF:\n",h.nnf)
 print("DNf:\n",h.dnf)
 print("CNf:\n",h.cnf)
+print("")
+print("Formule de base : ",j)
+print("NNF:\n",j.nnf)
+print("DNf:\n",j.dnf)
+print("CNf:\n",j.cnf)
+print("")
+print("Formule de base : ",k)
+print("NNF:\n",k.nnf)
+print("DNf:\n",k.dnf)
+print("CNf:\n",k.cnf)
 
 /*let booleanEvaluation = f.eval { (proposition) -> Bool in
     switch proposition {

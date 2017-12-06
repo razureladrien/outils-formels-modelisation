@@ -89,7 +89,7 @@ public enum Formula {
             return ((c.dnf && b.dnf) || (d.dnf && b.dnf)).dnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
           default: break
           }
-          // dans les autres cas on ne peut rien changer, car pas de distribution possible
+          // On traite que le cas où la distribution est possible
           switch b.dnf {
           case .disjunction(let c, let d): //pareil mais avec le terme de droite
             return ((c.dnf && a.dnf) || (d.dnf && a.dnf)).dnf
@@ -97,7 +97,7 @@ public enum Formula {
           }
         default :break
         }
-      return self
+      return self.nnf
     }
 
 
@@ -121,7 +121,7 @@ public enum Formula {
           return ((c.cnf || b.cnf) && (d.cnf || b.cnf)).cnf //on distribue et on refait une dnf sur chaque terme et chaque sous terme
         default: break
         }
-        // (dans les autres cas on ne peut rien changer, car pas de distribution possible)
+        // (on traite que le cas où la distribution est possible)
         switch b.cnf {
         case .conjunction(let c, let d): //pareil mais avec le terme de droite
           return ((c.cnf || a.cnf) && (d.cnf || a.cnf)).cnf
@@ -129,7 +129,7 @@ public enum Formula {
         }
       default :break
       }
-    return self
+    return self.nnf
     }
 
     /// The propositions the formula is based on.

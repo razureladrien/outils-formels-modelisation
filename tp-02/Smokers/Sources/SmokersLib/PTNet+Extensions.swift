@@ -16,7 +16,7 @@ public extension PTNet {
 
     public func markingGraph(from marking: PTMarking) -> MarkingGraph? {
 
-        let tab_transitions = Array(transitions) //on met les transitions dans un tableau pour pouvoir les prendre (avec un set on pouvait pas parcourir)
+      let tab_transitions = Array(transitions) //on met les transitions dans un tableau pour pouvoir les prendre (avec un set on pouvait pas parcourir)
         var firstmark = MarkingGraph(marking: marking, successors: [:]) // marquage initial
         var markages_done = [firstmark] //marquages deja faits
         var markages_to_do = [firstmark] //marquages qu'on va faire
@@ -47,10 +47,6 @@ public extension PTNet {
           markages_to_do.remove(at: 0) //je remove le marquage que je viens de traiter dans les marquages a traiter, permettra de stoper la boucle while à un moment
         }
         return firstmark //retourne le premier marquage qui est de type markingGraph
-        
-        // Write here the implementation of the marking graph generation.
-        return nil
+           }
 
-    }
-
-}
+       }
